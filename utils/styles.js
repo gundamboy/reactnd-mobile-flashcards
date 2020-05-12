@@ -1,12 +1,18 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+const BORDER_RADIUS = 15;
+
+export default StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+    },
+    cardFooter: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     welcome: {
         fontSize: 20,
