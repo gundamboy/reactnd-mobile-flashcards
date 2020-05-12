@@ -12,7 +12,7 @@ const initialData = {
 
     'wghfvipdnodecke3j0cw7h': {
         id: 'wghfvipdno0se3j0cw7h',
-        title: 'Deck Title',
+        title: 'React Deck',
         questions: [
             {
                 question: 'What is React?',
@@ -28,7 +28,7 @@ const initialData = {
     },
     '18gcb3tzo2xi7mxdu9fh': {
         id: '18gcb3tzo2xi7mxdu9fh',
-        title: 'Deck Title',
+        title: 'Javascript Deck',
         questions: [
             {
                 question: 'What is a closure?',

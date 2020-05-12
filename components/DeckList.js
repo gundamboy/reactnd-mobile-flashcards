@@ -15,8 +15,8 @@ class DeckList extends Component {
         dispatch(handleGetAllDecks());
     }
 
-    goToSingleDeck = () => {
-
+    goToSingleDeck = (deck) => {
+        this.props.navigation.navigate('Deck', {deck:deck});
     }
 
     render() {
@@ -37,7 +37,7 @@ class DeckList extends Component {
                                 </View>
                                 <View>
                                     <TouchableOpacity
-                                    onPress={() => this.goToSingleDeck}
+                                    onPress={() => this.goToSingleDeck(decks[item])}
                                     >
                                         <Icon
                                             name='arrow-right-bold-circle'
