@@ -34,6 +34,8 @@ class AddCard extends Component {
     }
 
     render() {
+        console.log("AddCard props: ", this.props);
+
         return (
             <View style={styles.viewWrapper}>
                 <Text

@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
 import { Text, Image, Button, Icon } from "react-native-elements";
 import styles from '../utils/styles';
-import {addNewCardToDeck, getSingleDeck} from "../store/actions/actions-Decks";
+import {addNewCardToDeck, getSingleDeck, handleGetAllDecks} from "../store/actions/actions-Decks";
 import {getDeck} from "../utils/api";
 
 class SingleDeckView extends Component {
     componentDidMount() {
+        const {dispatch} = this.props;
+        dispatch(getSingleDeck(this.props.deck));
+
         this.props.navigation.setOptions({title: this.props.deck.title});
-
-
     }
 
     addCard = (deck) => {
@@ -23,6 +24,7 @@ class SingleDeckView extends Component {
 
     render() {
         console.log("SingleDeckView props: ", this.props);
+
         return (
             <View>
                 <Image
@@ -72,8 +74,12 @@ class SingleDeckView extends Component {
 
 function mapStateToProps(state, ownProps) {
 
+    // return {
+    //     deck: ownProps.route.params.deck,
+    // };
+
     return {
-        deck: ownProps.route.params.deck,
+        deck: state.decks.singleDeck,
     };
 }
 
