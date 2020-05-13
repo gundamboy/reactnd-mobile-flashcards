@@ -22,14 +22,55 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
-    },
     singleDeckImage: {
         width: '100%',
         minHeight: 200,
         marginBottom: 16
     },
+    addCardBtnView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc'
+    },
+    quizCardBtnView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc'
+    },
+    submitCardBtn: {
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+        textAlign: 'center',
+        width: 100,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+    },
+    addCardBtnViewIcon: {
+        marginRight: 5
+    }
+    ,addCardBtnViewText: {
+        fontSize: 16
+    },
+    addCardHeroText: {
+        alignSelf: 'center',
+        marginTop: 16,
+        marginBottom: 36,
+        fontSize: 20
+    },
+    addCardInputContainer: {
+        marginBottom: 16,
+    },
+    addCardInputLabel: {
+        fontSize: 18,
+    },
+    addCardInput: {
+        marginBottom: 16,
+    }
 });

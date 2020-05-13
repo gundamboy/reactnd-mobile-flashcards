@@ -9,9 +9,8 @@ import {generateDeckUID} from "./helpers";
 // https://esqsoft.com/javascript_examples/date-to-epoch.htm  <-- to get date epochs for dummy data
 
 const initialData = {
-
-    'wghfvipdnodecke3j0cw7h': {
-        id: 'wghfvipdno0se3j0cw7h',
+    'deckOne': {
+        id: 'deckOne',
         title: 'React Deck',
         questions: [
             {
@@ -26,8 +25,8 @@ const initialData = {
         deckImgUri: 'http://placeimg.com/1000/260/animals',
         created: 1588793894
     },
-    '18gcb3tzo2xi7mxdu9fh': {
-        id: '18gcb3tzo2xi7mxdu9fh',
+    'deckTwo': {
+        id: 'deckTwo',
         title: 'Javascript Deck',
         questions: [
             {
@@ -52,9 +51,11 @@ export async function getDecks () {
         })
 }
 
-export async function getDeck ({ id }) {
-    return await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+export async function getDeck (id) {
+    console.log("API - getDeck(id): ", id);
+    return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
         .then((decks) => {
+            console.log("API - decks: ", decks);
         return JSON.parse(decks[id]);
     })
         .catch((e) => {
@@ -74,17 +75,23 @@ export async function saveDeckTitle ({ title }) {
     return deck;
 }
 
-export async function addCardToDeck ({ id, card }) {
-    return await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
-        .then((results) => {
-            const data = JSON.parse(results);
-            const deck = data[id];
-            deck.questions = deck.questions.concat([card]);
-            return AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify({[id]: deck}));
-        })
-        .catch((e) => {
-            return `Unable to add deck: ${e.message}`
-        });
+export function addCardToDeck ({id, card}) {
+
+    return getDecks().then((decks) => {
+
+        console.group("API addCardToDeck");
+            console.log("id: ", id);
+            console.log("total decks: ", Object.keys(decks).length);
+            console.log("decks: ", decks);
+            console.log("decks[id]: ", decks[id]);
+        console.groupEnd()
+
+        decks[id].questions.push(card);
+        console.log("decks[id] after push: ", decks[id]);
+        AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(decks));
+        return decks;
+    });
+
 }
 
 export async function deleteDeck({ deckId }) {

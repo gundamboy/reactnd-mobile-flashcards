@@ -13,6 +13,7 @@ class DeckList extends Component {
     componentDidMount() {
         const {dispatch} = this.props;
         dispatch(handleGetAllDecks());
+
     }
 
     goToSingleDeck = (deck) => {
@@ -20,24 +21,25 @@ class DeckList extends Component {
     }
 
     render() {
-        const { decks } = this.props;
+        const { allDecks } = this.props.decks;
+        console.log("deck list props: ", this.props);
 
         return (
-            <>
+            <View>
                 <FlatList
-                    data={Object.keys(decks)}
+                    data={Object.keys(allDecks)}
                     renderItem={({ item }) => (
                         <Card
-                            image={{uri: decks[item].deckImgUri}
+                            image={{uri: allDecks[item].deckImgUri}
                             }>
                             <View style={styles.cardFooter}>
                                 <View>
-                                    <Text>{decks[item].title}</Text>
-                                    <Text>{decks[item].questions.length} {decks[item].questions.length === 1 ? "card" : "cards"} in this deck</Text>
+                                    <Text>{allDecks[item].title}</Text>
+                                    <Text>{allDecks[item].questions.length} {allDecks[item].questions.length === 1 ? "card" : "cards"} in this deck</Text>
                                 </View>
                                 <View>
                                     <TouchableOpacity
-                                    onPress={() => this.goToSingleDeck(decks[item])}
+                                        onPress={() => this.goToSingleDeck(allDecks[item])}
                                     >
                                         <Icon
                                             name='arrow-right-bold-circle'
@@ -48,17 +50,20 @@ class DeckList extends Component {
                             </View>
                         </Card>
                     )}
-                    keyExtractor={item => decks[item].id}
+                    keyExtractor={item => allDecks[item].id}
                     horizontal={false}
                 />
-            </>
+            </View>
         );
     }
 }
 
 
-const mapStateToProps = ({ decks }) => ({
-    decks
-})
+function mapStateToProps(state, ownProps) {
+    return {
+        decks: state.decks
+    };
+}
+
 
 export default connect(mapStateToProps)(DeckList);

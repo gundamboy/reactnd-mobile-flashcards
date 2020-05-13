@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import { Text, View, TouchableOpacity } from "react-native";
-import { Image, Button, Icon } from "react-native-elements";
+import { View, TouchableOpacity } from "react-native";
+import { Text, Image, Button, Icon } from "react-native-elements";
 import styles from '../utils/styles';
+import {addNewCardToDeck, getSingleDeck} from "../store/actions/actions-Decks";
+import {getDeck} from "../utils/api";
 
 class SingleDeckView extends Component {
     componentDidMount() {
         this.props.navigation.setOptions({title: this.props.deck.title});
+
+
     }
 
-    addCard = (id) => {
-        this.props.navigation.navigate('AddCard', {deckId: id});
+    addCard = (deck) => {
+        this.props.navigation.navigate('AddCard', {deck:deck});
     }
 
     startQuiz = (deck) => {
@@ -18,6 +22,7 @@ class SingleDeckView extends Component {
     }
 
     render() {
+        console.log("SingleDeckView props: ", this.props);
         return (
             <View>
                 <Image
@@ -30,27 +35,31 @@ class SingleDeckView extends Component {
                     </View>
                     <View style={styles.singleDeckBtnRow}>
                         <TouchableOpacity
-                            onPress={() => this.addCard(this.props.deck.id)}
+                            onPress={() => this.addCard(this.props.deck)}
                         >
-                            <Button
-                                title="Add A Card"
-                                type="clear"
-                                icon={
-                                    <Icon
-                                        name='plus-circle'
-                                        size={15}
-                                        type='material-community'/>
-                                }
-                            />
+                            <View style={styles.addCardBtnView}>
+                                <Icon
+                                    name='plus-circle'
+                                    size={18}
+                                    type='material-community'
+                                    style={styles.addCardBtnViewIcon}/>
+
+                                <Text style={styles.addCardBtnViewText}>Add A Card</Text>
+                            </View>
+
                         </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={() => this.startQuiz(this.props.deck)}
                         >
-                            <Button
-                                title="Start Quiz"
-                                type="clear"
-                            />
+                            <View style={styles.quizCardBtnView}>
+                                <Icon
+                                    name='school'
+                                    size={18}
+                                    type='material-community'
+                                    style={styles.addCardBtnViewIcon}/>
+                                <Text style={styles.addCardBtnViewText}>Start Quiz</Text>
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -59,10 +68,12 @@ class SingleDeckView extends Component {
     }
 }
 
+
+
 function mapStateToProps(state, ownProps) {
 
     return {
-        deck: ownProps.route.params.deck
+        deck: ownProps.route.params.deck,
     };
 }
 
