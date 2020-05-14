@@ -17,29 +17,35 @@ class DeckList extends Component {
     }
 
     goToSingleDeck = (deck) => {
-        this.props.navigation.navigate('Deck', {deck:deck});
+        this.props.navigation.navigate('Deck', {
+            title: deck.title,
+            deckId: deck.id,
+            singleDeck: deck
+        });
     }
 
     render() {
-        const { allDecks } = this.props.decks;
+        const { decks } = this.props.decks;
+        const { navigation } = this.props;
+        console.log("deck list decks: ", decks);
         console.log("deck list props: ", this.props);
 
         return (
             <View>
                 <FlatList
-                    data={Object.keys(allDecks)}
+                    data={Object.keys(decks)}
                     renderItem={({ item }) => (
                         <Card
-                            image={{uri: allDecks[item].deckImgUri}
+                            image={{uri: decks[item].deckImgUri}
                             }>
                             <View style={styles.cardFooter}>
                                 <View>
-                                    <Text>{allDecks[item].title}</Text>
-                                    <Text>{allDecks[item].questions.length} {allDecks[item].questions.length === 1 ? "card" : "cards"} in this deck</Text>
+                                    <Text>{decks[item].title}</Text>
+                                    <Text>{decks[item].questions.length} {decks[item].questions.length === 1 ? "card" : "cards"} in this deck</Text>
                                 </View>
                                 <View>
                                     <TouchableOpacity
-                                        onPress={() => this.goToSingleDeck(allDecks[item])}
+                                        onPress={() => this.goToSingleDeck(decks[item])}
                                     >
                                         <Icon
                                             name='arrow-right-bold-circle'
@@ -50,7 +56,7 @@ class DeckList extends Component {
                             </View>
                         </Card>
                     )}
-                    keyExtractor={item => allDecks[item].id}
+                    keyExtractor={item => decks[item].id}
                     horizontal={false}
                 />
             </View>
@@ -59,11 +65,7 @@ class DeckList extends Component {
 }
 
 
-function mapStateToProps(state, ownProps) {
-    return {
-        decks: state.decks
-    };
-}
+const mapStateToProps = state => ({ decks: state });
 
 
 export default connect(mapStateToProps)(DeckList);

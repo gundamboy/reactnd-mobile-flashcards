@@ -4,23 +4,22 @@ import {
     GET_SINGLE_DECK
 } from "../actions/actionTypes";
 
-const initialState = {
-    allDecks: {},
-    singleDeck: {}
-}
-
-export default function decks(state = initialState, action) {
+export default function decks(state = {}, action) {
     switch (action.type) {
         case GET_ALL_DECKS:
             return {
                 ...state,
-                allDecks: action.decks
+                ...action.decks
             };
         case ADD_CARD_TO_DECK:
+            const { deckId, card } = action;
             return {
                 ...state,
-                singleDeck: action.decks[action.id],
-            }
+                [deckId]: {
+                    ...state[deckId],
+                    questions: [...state[deckId].questions].concat(card)
+                }
+            };
         case GET_SINGLE_DECK:
             return {
                 ...state,

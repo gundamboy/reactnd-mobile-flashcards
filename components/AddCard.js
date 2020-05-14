@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
 import { Text, Input  } from "react-native-elements";
 import styles from '../utils/styles';
-import {addNewCardToDeck, handleGetAllDecks} from "../store/actions/actions-Decks";
+import { addCardToDeck } from "../store/actions/actions-Decks";
 
 class AddCard extends Component {
     constructor(props) {
@@ -15,27 +15,26 @@ class AddCard extends Component {
         }
     }
 
-    componentDidMount() {
-
-    }
-
     submitCard = () => {
+        const { addCardToDeck, deck, navigation } = this.props;
+        console.log("AddCard Submit props", this.props);
+
+
+        const card = {
+            question: this.state.question,
+            answer: this.state.answer
+        };
+
         if (this.state.question.length && this.state.answer.length) {
-            this.props.addCardToDeck(this.props.deck.id, this.state);
-
-            this.props.navigation.goBack();
-
-            this.setState({
-                question: '',
-                answer: ''
-            })
+            addCardToDeck(deck.id, card);
+            this.setState({ question: '', answer: '' });
+            navigation.goBack();
         }
 
     }
 
     render() {
-        console.log("AddCard props: ", this.props);
-
+        console.log("AddCard props", this.props);
         return (
             <View style={styles.viewWrapper}>
                 <Text
@@ -68,18 +67,15 @@ class AddCard extends Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) => {
+    const deckId = ownProps.route.params.deck.deck.id;
+    const deck = state['decks'][deckId];
 
     return {
-        deck: ownProps.route.params.deck
+        deck
     };
-}
+};
 
-function mapDispatchToProps(dispatch) {
 
-    return {
-        addCardToDeck: (deckId, card) => { dispatch(addNewCardToDeck(deckId, card)) }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddCard);
+export default connect(mapStateToProps,  { addCardToDeck })(AddCard);

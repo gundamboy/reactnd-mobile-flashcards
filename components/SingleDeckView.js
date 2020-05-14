@@ -2,42 +2,47 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
 import { Text, Image, Button, Icon } from "react-native-elements";
+import { NavigationAction } from "@react-navigation/native";
 import styles from '../utils/styles';
-import {addNewCardToDeck, getSingleDeck, handleGetAllDecks} from "../store/actions/actions-Decks";
-import {getDeck} from "../utils/api";
 
 class SingleDeckView extends Component {
     componentDidMount() {
-        const {dispatch} = this.props;
-        dispatch(getSingleDeck(this.props.deck));
-
         this.props.navigation.setOptions({title: this.props.deck.title});
     }
 
+    shouldComponentUpdate(nextProps) {
+        return nextProps.deck !== undefined;
+    }
+
     addCard = (deck) => {
-        this.props.navigation.navigate('AddCard', {deck:deck});
+        this.props.navigation.navigate('AddCard', {
+            deck: deck,
+        });
     }
 
     startQuiz = (deck) => {
-        this.props.navigation.navigate('Quiz', {deck:deck});
+        this.props.navigation.navigate('Quiz', {
+            deck: deck,
+        });
     }
 
     render() {
+        const { deck } = this.props;
         console.log("SingleDeckView props: ", this.props);
 
         return (
             <View>
                 <Image
-                    source={{uri: this.props.deck.deckImgUri}}
+                    source={{uri: deck.deckImgUri}}
                     style={styles.singleDeckImage}
                 />
                 <View style={styles.viewWrapper}>
                     <View>
-                        <Text>Cards: {this.props.deck.questions.length}</Text>
+                        <Text>Cards: {deck.questions.length}</Text>
                     </View>
                     <View style={styles.singleDeckBtnRow}>
                         <TouchableOpacity
-                            onPress={() => this.addCard(this.props.deck)}
+                            onPress={() => this.addCard({deck})}
                         >
                             <View style={styles.addCardBtnView}>
                                 <Icon
@@ -52,7 +57,7 @@ class SingleDeckView extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            onPress={() => this.startQuiz(this.props.deck)}
+                            onPress={() => this.startQuiz({deck})}
                         >
                             <View style={styles.quizCardBtnView}>
                                 <Icon
@@ -71,16 +76,13 @@ class SingleDeckView extends Component {
 }
 
 
-
-function mapStateToProps(state, ownProps) {
-
-    // return {
-    //     deck: ownProps.route.params.deck,
-    // };
+const mapStateToProps = (state, ownProps) => {
+    const deckId = ownProps.route.params.deckId;
+    const deck = state['decks'][deckId];
 
     return {
-        deck: state.decks.singleDeck,
+        deck
     };
-}
+};
 
 export default connect(mapStateToProps)(SingleDeckView);
