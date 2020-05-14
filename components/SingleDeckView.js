@@ -10,10 +10,6 @@ class SingleDeckView extends Component {
         this.props.navigation.setOptions({title: this.props.deck.title});
     }
 
-    shouldComponentUpdate(nextProps) {
-        return nextProps.deck !== undefined;
-    }
-
     addCard = (deck) => {
         this.props.navigation.navigate('AddCard', {
             deck: deck,
