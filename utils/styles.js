@@ -6,6 +6,10 @@ export default StyleSheet.create({
         marginLeft: 8,
         marginRight: 8,
     },
+    headerButtons: {
+        marginLeft: 8,
+        marginRight: 8,
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -43,7 +47,7 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc'
     },
-    submitCardBtn: {
+    submitButtons: {
         alignSelf: 'flex-end',
         alignItems: 'center',
         textAlign: 'center',

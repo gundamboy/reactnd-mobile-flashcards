@@ -34,7 +34,6 @@ class AddCard extends Component {
     }
 
     render() {
-        console.log("AddCard props", this.props);
         return (
             <View style={styles.viewWrapper}>
                 <Text
@@ -60,7 +59,7 @@ class AddCard extends Component {
                 <TouchableOpacity
                     onPress={() => {this.submitCard()}}
                 >
-                    <Text style={styles.submitCardBtn}>Add Card</Text>
+                    <Text style={styles.submitButtons}>Add Card</Text>
                 </TouchableOpacity>
             </View>
         );

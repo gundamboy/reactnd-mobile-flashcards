@@ -10,10 +10,33 @@ class DeckList extends Component {
         super(props);
     }
 
+
+
     componentDidMount() {
         const {dispatch} = this.props;
         dispatch(handleGetAllDecks());
 
+        console.log("DeckList props", this.props);
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                    style={styles.headerButtons}
+                    onPress={() => this.goToAddDeck()}>
+                    <Icon
+                        name='plus-circle'
+                        size={24}
+                        type='material-community'
+                    />
+                </TouchableOpacity>
+                </View>
+            )
+        });
+    }
+
+    goToAddDeck = () => {
+        this.props.navigation.navigate('AddDeck');
     }
 
     goToSingleDeck = (deck) => {
@@ -27,7 +50,7 @@ class DeckList extends Component {
     render() {
         const { decks } = this.props.decks;
         const { navigation } = this.props;
-        console.log("deck list decks: ", decks);
+        console.log("deck list Decks: ", decks);
         console.log("deck list props: ", this.props);
 
         return (

@@ -8,9 +8,10 @@ import {createStackNavigator} from "@react-navigation/stack";
 import SingleDeckView from "./components/SingleDeckView";
 import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
+import { Button, Icon } from 'react-native-elements';
+import AddDeck from "./components/AddDeck";
 
 const Stack = createStackNavigator();
-
 
 class App extends Component {
 
@@ -20,7 +21,16 @@ class App extends Component {
                 <ThemeProvider>
                     <NavigationContainer>
                         <Stack.Navigator initialRouteName="Home">
-                            <Stack.Screen name="Home" component={DeckList} />
+                            <Stack.Screen name="Home"
+                                          options={({ navigation, route}) => ({
+                                              headerTitle: "Your Decks"
+                                          })}
+                                          component={DeckList} />
+                            <Stack.Screen name="AddDeck"
+                                          options={({ navigation, route}) => ({
+                                              headerTitle: "Add A New Deck"
+                                          })}
+                                          component={AddDeck} />
                             <Stack.Screen name="Deck" component={SingleDeckView} />
                             <Stack.Screen name="AddCard" component={AddCard} options={{title: "Add A Card"}} />
                             <Stack.Screen name="Quiz" component={Quiz} />

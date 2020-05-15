@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-community/async-storage';
+import { AsyncStorage } from 'react-native';
 import {FLASHCARDS_STORAGE_KEY} from "./constants";
-import {generateDeckUID} from "./helpers";
+import {generateDeckUID, generateImageUrl} from "./helpers";
 
 // notice I have empty callbacks for the last arguments in getItem and setItem. This is because
 // the linter was driving me insane with yellow squiggly lines and I hated it and it made me want to rage.
@@ -61,7 +61,7 @@ export async function getDecks() {
 
 export async function getDeck(id) {
     try {
-        const storeResults = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
+        const storeResults = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY);
 
         return JSON.parse(storeResults)[id];
     } catch (err) {
@@ -83,6 +83,34 @@ export async function addCardToDeckAS(id, card) {
         );
     } catch (err) {
         console.log(err);
+    }
+}
+
+export async function saveDeckAS(deckId, title, deckImgUri) {
+    console.log("saveDeckAS called");
+
+    try {
+        await AsyncStorage.mergeItem(
+            FLASHCARDS_STORAGE_KEY,
+            JSON.stringify({
+                [deckId]: {
+                    id: deckId,
+                    title,
+                    questions: [],
+                    deckImgUri
+                }
+            })
+        ).then(() => {
+            const decks = AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY);
+
+            if (decks) {
+                const newDeck = decks[deckId];
+                console.log("new deck is: ", newDeck);
+            }
+
+        });
+    } catch (err) {
+        console.log("saveDeckAS ERROR:", err);
     }
 }
 

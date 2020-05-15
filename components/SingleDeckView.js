@@ -74,7 +74,7 @@ class SingleDeckView extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     const deckId = ownProps.route.params.deckId;
-    const deck = state['decks'][deckId];
+    const deck = state['decks'][deckId] !== undefined ? state['decks'][deckId] : ownProps.route.params.deck;
 
     return {
         deck

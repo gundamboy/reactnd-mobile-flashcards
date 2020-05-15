@@ -78,7 +78,14 @@ export function setLocalNotification () {
 }
 
 export function generateDeckUID() {
-    return (
-        Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 12)
-    );
+    return Math.random().toString(36).substring(2, 12) + Math.random().toString(36).substring(2, 12);
+}
+
+export function generateImageUrl() {
+    const cats = ["animals", "arc", "nature", "tech"];
+    return "http://placeimg.com/1000/260/" + cats[Math.floor(Math.random() * cats.length)];
+}
+
+export function setReadWritePermissions () {
+
 }
