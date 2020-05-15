@@ -26,6 +26,12 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    deleteDeckBtnRow: {
+        marginTop: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     singleDeckImage: {
         width: '100%',
         minHeight: 200,

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
-import { Text, Input  } from "react-native-elements";
+import {Text, Input, Icon} from "react-native-elements";
 import styles from '../utils/styles';
 import { addCardToDeck } from "../store/actions/actions-Decks";
 
@@ -13,6 +13,24 @@ class AddCard extends Component {
             question: 'test q',
             answer: 'test a',
         }
+    }
+
+    componentDidMount() {
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                        style={styles.headerButtons}
+                        onPress={() => this.goToHome()}>
+                        <Icon
+                            name='home'
+                            size={24}
+                            type='material-community'
+                        />
+                    </TouchableOpacity>
+                </View>
+            )
+        });
     }
 
     submitCard = () => {

@@ -1,14 +1,62 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
-import { Text, Image, Button, Icon } from "react-native-elements";
+import {Text, Image, Button, Icon, Overlay, Card} from "react-native-elements";
 import { NavigationAction } from "@react-navigation/native";
 import styles from '../utils/styles';
 
 class SingleDeckView extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            visible: true
+        }
+    }
+
+
     componentDidMount() {
         this.props.navigation.setOptions({title: this.props.deck.title});
+
+        this.props.navigation.setOptions({
+            headerRight: () => (
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                        style={styles.headerButtons}
+                        onPress={() => this.goToHome()}>
+                        <Icon
+                            name='home'
+                            size={24}
+                            type='material-community'
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.headerButtons}
+                        onPress={() => this.toggleOverlay()}>
+                        <Icon
+                            name='settings'
+                            size={24}
+                            type='material-community'
+                        />
+                    </TouchableOpacity>
+                </View>
+            )
+        });
     }
+
+    settings = () => {
+
+    }
+
+    deleteDeck = () => {
+
+    }
+
+    toggleOverlay = () => {
+        this.setState({
+            visible: !this.state.visible
+        })
+    };
 
     addCard = (deck) => {
         this.props.navigation.navigate('AddCard', {
@@ -66,6 +114,38 @@ class SingleDeckView extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Overlay
+                    isVisible={this.state.visible}
+                    onBackdropPress={this.toggleOverlay}
+                    overlayStyle={{}}
+                >
+                    <View>
+                        <Text
+                            style={{
+                                fontSize: 22,
+                                textAlign: 'center',
+                                borderBottomWidth: 1,
+                                borderBottomColor: '#ccc',
+                                marginBottom: 8,
+                                paddingBottom: 4
+                            }}
+                        >Options</Text>
+                        <Text>Would you like to delete this deck?</Text>
+                        <View style={styles.deleteDeckBtnRow}>
+                            <TouchableOpacity
+                                onPress={() => {this.deleteDeck()}}
+                            >
+                                <Text style={styles.submitButtons}>DELETE</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                                onPress={() => {this.toggleOverlay()}}
+                            >
+                                <Text style={styles.submitButtons}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Overlay>
             </View>
         );
     }
