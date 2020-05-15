@@ -1,6 +1,5 @@
 import { AsyncStorage } from 'react-native';
 import {FLASHCARDS_STORAGE_KEY} from "./constants";
-import {generateDeckUID, generateImageUrl} from "./helpers";
 
 // notice I have empty callbacks for the last arguments in getItem and setItem. This is because
 // the linter was driving me insane with yellow squiggly lines and I hated it and it made me want to rage.
@@ -114,3 +113,17 @@ export async function saveDeckAS(deckId, title, deckImgUri) {
     }
 }
 
+export async function deleteDeckAS(key) {
+    try {
+        console.group("API - deleteDeckAS");
+        console.log("args: ", key);
+        console.groupEnd();
+        const results = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY);
+        const data = JSON.parse(results);
+        data[key] = undefined;
+        delete data[key];
+        AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
+    } catch (err) {
+        console.log(err);
+    }
+}

@@ -10,8 +10,6 @@ class DeckList extends Component {
         super(props);
     }
 
-
-
     componentDidMount() {
         const {dispatch} = this.props;
         dispatch(handleGetAllDecks());
@@ -52,6 +50,7 @@ class DeckList extends Component {
         const { navigation } = this.props;
         console.log("deck list Decks: ", decks);
         console.log("deck list props: ", this.props);
+
 
         return (
             <View>

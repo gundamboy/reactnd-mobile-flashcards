@@ -1,4 +1,4 @@
-import {ADD_CARD_TO_DECK, ADD_DECK, GET_ALL_DECKS, GET_SINGLE_DECK} from "../actions/actionTypes";
+import {ADD_CARD_TO_DECK, ADD_DECK, DELETE_DECK, GET_ALL_DECKS, GET_SINGLE_DECK} from "../actions/actionTypes";
 
 export default function reducerDecks(state = {}, action) {
     switch (action.type) {
@@ -30,6 +30,12 @@ export default function reducerDecks(state = {}, action) {
                     deckImgUri: action.deckImgUri
                 }
             };
+        case DELETE_DECK:
+            const { id } = action;
+            // return ({ [id]: value, ...remainingDecks } = state);
+            const { [id]: value, ...decks } = state;
+            console.log("REDUCER DELETE_DECK", decks);
+            return decks;
         default:
             return state;
     }

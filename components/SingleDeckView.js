@@ -1,16 +1,17 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
-import {Text, Image, Button, Icon, Overlay, Card} from "react-native-elements";
-import { NavigationAction } from "@react-navigation/native";
+import {Text, Image, Icon, Overlay} from "react-native-elements";
+import { StackActions } from '@react-navigation/native';
 import styles from '../utils/styles';
+import {deleteDeck} from "../store/actions/actions-Decks";
 
 class SingleDeckView extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            visible: true
+            visible: false
         }
     }
 
@@ -44,12 +45,18 @@ class SingleDeckView extends Component {
         });
     }
 
-    settings = () => {
-
+    deleteDeck = (id) => {
+        const { navigation, dispatch } = this.props;
+        dispatch(deleteDeck(id)).then((result) => {
+            console.log("deleteDeck dispatch result: ", result);
+            this.toggleOverlay();
+            navigation.dispatch(StackActions.popToTop())
+        });
     }
 
-    deleteDeck = () => {
-
+    goToHome = () => {
+        const { navigation } = this.props;
+        navigation.dispatch(StackActions.popToTop());
     }
 
     toggleOverlay = () => {
@@ -73,6 +80,14 @@ class SingleDeckView extends Component {
     render() {
         const { deck } = this.props;
         console.log("SingleDeckView props: ", this.props);
+
+        if (!deck) {
+            return (
+                <View>
+                    <Text>Nothing to see here</Text>
+                </View>
+            )
+        }
 
         return (
             <View>
@@ -133,7 +148,7 @@ class SingleDeckView extends Component {
                         <Text>Would you like to delete this deck?</Text>
                         <View style={styles.deleteDeckBtnRow}>
                             <TouchableOpacity
-                                onPress={() => {this.deleteDeck()}}
+                                onPress={() => {this.deleteDeck(this.props.deck.id)}}
                             >
                                 <Text style={styles.submitButtons}>DELETE</Text>
                             </TouchableOpacity>
