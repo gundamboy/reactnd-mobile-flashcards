@@ -14,8 +14,6 @@ class DeckList extends Component {
         const {dispatch} = this.props;
         dispatch(handleGetAllDecks());
 
-        console.log("DeckList props", this.props);
-
         this.props.navigation.setOptions({
             headerRight: () => (
                 <View style={{flexDirection: 'row'}}>
@@ -47,10 +45,6 @@ class DeckList extends Component {
 
     render() {
         const { decks } = this.props.decks;
-        const { navigation } = this.props;
-        console.log("deck list Decks: ", decks);
-        console.log("deck list props: ", this.props);
-
 
         return (
             <View>

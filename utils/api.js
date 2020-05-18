@@ -115,9 +115,6 @@ export async function saveDeckAS(deckId, title, deckImgUri) {
 
 export async function deleteDeckAS(key) {
     try {
-        console.group("API - deleteDeckAS");
-        console.log("args: ", key);
-        console.groupEnd();
         const results = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY);
         const data = JSON.parse(results);
         data[key] = undefined;

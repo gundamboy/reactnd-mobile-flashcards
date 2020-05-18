@@ -15,7 +15,6 @@ class SingleDeckView extends Component {
         }
     }
 
-
     componentDidMount() {
         this.props.navigation.setOptions({title: this.props.deck.title});
 
@@ -48,7 +47,6 @@ class SingleDeckView extends Component {
     deleteDeck = (id) => {
         const { navigation, dispatch } = this.props;
         dispatch(deleteDeck(id)).then((result) => {
-            console.log("deleteDeck dispatch result: ", result);
             this.toggleOverlay();
             navigation.dispatch(StackActions.popToTop())
         });

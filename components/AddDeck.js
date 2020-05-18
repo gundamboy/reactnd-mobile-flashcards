@@ -57,13 +57,6 @@ class AddDeck extends Component {
             if(saveNewDeck) {
                 getDeck(this.state.deckId)
                     .then((d) => {
-                        console.group("Render");
-                        console.log("AddDeck saveNewDeck state: ", this.state);
-                        console.log("getDeck id: ", this.state.deckId);
-                        console.log("getDeck d: ", d);
-                        console.log("getDeck title: ", this.state.title);
-                        console.groupEnd();
-
                         this.props.navigation.navigate('Deck', {
                             title: this.state.title,
                             deckId: this.state.deckId,

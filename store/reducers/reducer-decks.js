@@ -32,9 +32,7 @@ export default function reducerDecks(state = {}, action) {
             };
         case DELETE_DECK:
             const { id } = action;
-            // return ({ [id]: value, ...remainingDecks } = state);
             const { [id]: value, ...decks } = state;
-            console.log("REDUCER DELETE_DECK", decks);
             return decks;
         default:
             return state;
