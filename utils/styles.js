@@ -20,6 +20,18 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
+    cardHeader: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        paddingBottom: 8,
+        marginBottom: 8,
+    },
+    cardTitle: {
+        fontSize: 18
+    },
     singleDeckBtnRow: {
         marginTop: 16,
         flexDirection: 'row',
@@ -41,15 +53,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc'
-    },
-    quizCardBtnView: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        padding: 10,
+        padding: 8,
         borderWidth: 1,
         borderColor: '#ccc'
     },
@@ -63,7 +67,7 @@ export default StyleSheet.create({
         borderColor: '#ccc',
     },
     addCardBtnViewIcon: {
-        marginRight: 5
+        marginRight: 4
     }
     ,addCardBtnViewText: {
         fontSize: 16
@@ -82,5 +86,77 @@ export default StyleSheet.create({
     },
     addCardInput: {
         marginBottom: 16,
-    }
+    },
+
+
+    cardButtonRowQuiz: {
+        marginBottom: 8,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cardButtonRowQuizAnswers: {
+        marginBottom: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardButtonRowQuizComplete: {
+        marginBottom: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    cardBodyQuiz: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 8,
+        marginTop: 8,
+        paddingBottom: 32,
+        paddingTop: 32,
+    },
+    cardFooterQuiz: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        paddingTop: 16,
+        marginTop: 8,
+    },
+    QuizCardBtnView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 8,
+        borderWidth: 1,
+        borderColor: '#ccc'
+    },
+    quizCardBtnView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        padding: 8,
+        borderWidth: 1,
+        borderColor: '#ccc'
+    },
+    btnQuiz: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 8
+    },
+    btnQuizCorrect: {
+
+    },
+    btnQuizIncorrect: {
+
+    },
+    btnQuizAnswer: {
+
+    },
+    quizBodyText: {
+        fontSize: 24,
+        textAlign: 'center'
+    },
 });

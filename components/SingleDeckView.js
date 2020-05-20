@@ -77,7 +77,9 @@ class SingleDeckView extends Component {
 
     render() {
         const { deck } = this.props;
+        const enableQuiz =  deck.questions.length > 0;
         console.log("SingleDeckView props: ", this.props);
+        console.log("SingleDeckView enableQuiz: ",enableQuiz);
 
         if (!deck) {
             return (
@@ -113,18 +115,24 @@ class SingleDeckView extends Component {
 
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            onPress={() => this.startQuiz({deck})}
-                        >
-                            <View style={styles.quizCardBtnView}>
-                                <Icon
-                                    name='school'
-                                    size={18}
-                                    type='material-community'
-                                    style={styles.addCardBtnViewIcon}/>
-                                <Text style={styles.addCardBtnViewText}>Start Quiz</Text>
-                            </View>
-                        </TouchableOpacity>
+                        {enableQuiz
+                            ?
+                            <TouchableOpacity
+                                onPress={() => this.startQuiz({deck})}
+                            >
+                                <View style={styles.quizCardBtnView}>
+                                    <Icon
+                                        name='school'
+                                        size={18}
+                                        type='material-community'
+                                        style={styles.addCardBtnViewIcon}/>
+                                    <Text style={styles.addCardBtnViewText}>Start Quiz</Text>
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <Text>Add a question to take a quiz!</Text>
+                        }
+
                     </View>
                 </View>
                 <Overlay
