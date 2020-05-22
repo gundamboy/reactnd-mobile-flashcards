@@ -34,14 +34,6 @@ const initialData = {
     }
 }
 
-export function getData() {
-    return initialData;
-}
-
-function formatDeckResults(results) {
-    return results === null ? initialData : JSON.parse(results);
-}
-
 export async function getDecks() {
     try {
         const decks = await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY);
@@ -49,8 +41,6 @@ export async function getDecks() {
         if (decks === null) {
             AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(initialData));
         }
-
-        console.log("getDecks(): ", decks);
 
         return decks === null ? initialData : JSON.parse(decks);
     } catch (err) {
@@ -86,8 +76,6 @@ export async function addCardToDeckAS(id, card) {
 }
 
 export async function saveDeckAS(deckId, title, deckImgUri) {
-    console.log("saveDeckAS called");
-
     try {
         await AsyncStorage.mergeItem(
             FLASHCARDS_STORAGE_KEY,
@@ -104,7 +92,6 @@ export async function saveDeckAS(deckId, title, deckImgUri) {
 
             if (decks) {
                 const newDeck = decks[deckId];
-                console.log("new deck is: ", newDeck);
             }
 
         });
