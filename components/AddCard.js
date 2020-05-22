@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
-import {Text, Input, Icon} from "react-native-elements";
+import {Text, Input, Icon, Card} from "react-native-elements";
 import styles from '../utils/styles';
 import { addCardToDeck } from "../store/actions/actions-Decks";
 
@@ -10,8 +10,9 @@ class AddCard extends Component {
         super(props);
 
         this.state = {
-            question: 'test q',
-            answer: 'test a',
+            question: '',
+            answer: '',
+            error: false
         }
     }
 
@@ -47,38 +48,81 @@ class AddCard extends Component {
             addCardToDeck(deck.id, card);
             this.setState({ question: '', answer: '' });
             navigation.goBack();
+        } else {
+            this.setState({
+                ...this.state,
+                error: true
+            });
         }
+    }
 
+    handleQuestionTextChange = (text) => {
+        this.setState({
+            ...this.state,
+            question: text,
+            error: false
+        })
+    }
+
+    handleAnswerTextChange = (text) => {
+        this.setState({
+            ...this.state,
+            answer: text,
+            error: false
+        })
     }
 
     render() {
         return (
             <View style={styles.viewWrapper}>
-                <Text
-                    style={styles.addCardHeroText}
-                >Add a new card to your {this.props.deck.title} deck.</Text>
+                <Card containerStyle={{padding: 0}}>
+                    <View style={styles.cardHeader}>
+                        <Text style={styles.addNewCardHeroText}>Add a new flashcard to your {this.props.deck.title} deck.</Text>
+                    </View>
+                    <View style={styles.addNewDeckCardBody}>
+                        <View style={styles.addNewCardForm}>
+                            <Input
+                                containerStyle={styles.addCardInputContainer}
+                                inputStyle={styles.addNewCardInputStyles}
+                                placeholder='Question'
+                                label={<Text style={styles.addCardInputLabel}>Add a question:</Text>}
+                                value={this.state.question}
+                                onChangeText={question => this.handleQuestionTextChange(question)}
+                            />
 
-                <Input
-                    containerStyle={styles.addCardInputContainer}
-                    placeholder='Question'
-                    label={<Text style={styles.addCardInputLabel}>Add a question:</Text>}
-                    value={this.state.question}
-                    onChangeText={question => this.setState({ question })}
-                />
+                            <Input
+                                containerStyle={styles.addCardInputContainer}
+                                inputStyle={styles.addNewCardInputStyles}
+                                placeholder='Answer'
+                                label={<Text style={styles.addCardInputLabel}>Add an answer:</Text>}
+                                value={this.state.answer}
+                                onChangeText={answer => this.handleAnswerTextChange(answer)}
+                            />
 
-                <Input
-                    containerStyle={styles.addCardInputContainer}
-                    placeholder='Answer'
-                    label={<Text style={styles.addCardInputLabel}>Add an answer:</Text>}
-                    value={this.state.answer}
-                    onChangeText={answer => this.setState({ answer })}
-                />
+                            {this.state.error &&
+                            <View style={styles.errorMessageContainer}>
+                                <Icon
+                                    name='error-outline'
+                                    size={36}
+                                    style={styles.errorMessageIcon}
+                                    color='#db684d'
+                                    type='material'
+                                />
+                                <Text style={styles.errorMessageText}>You must have a question and an answer to save a flashcard</Text>
+                            </View>
+                            }
+                        </View>
+                    </View>
 
-                <TouchableOpacity
-                    onPress={() => {this.submitCard()}}
-                >
-                    <Text style={styles.submitButtons}>Add Card</Text>
-                </TouchableOpacity>
+                    <View style={[styles.buttonRow, styles.addNewCardBtnRow]}>
+                        <TouchableOpacity
+                            style={styles.addNewCardSubmitButton}
+                            onPress={() => {this.submitCard()}}
+                        >
+                            <Text style={styles.addNewCardSubmitButtonText} >Add Card</Text>
+                        </TouchableOpacity>
+                    </View>
+                </Card>
             </View>
         );
     }

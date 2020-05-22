@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TouchableOpacity, View} from "react-native";
-import {Icon, Input, Text} from "react-native-elements";
+import {Card, Icon, Input, Text} from "react-native-elements";
 import {handleGetAllDecks, saveDeck} from "../store/actions/actions-Decks";
 import styles from "../utils/styles";
 import {generateDeckUID, generateImageUrl} from "../utils/helpers";
@@ -14,7 +14,8 @@ class AddDeck extends Component {
         this.state = {
             title: '',
             deckId: '',
-            imgUri: ''
+            imgUri: '',
+            error: true
         }
     }
 
@@ -63,33 +64,72 @@ class AddDeck extends Component {
                             deck: d,
                         });
 
-                        this.setState({ deckId: '', title: '', imgUri: ''});
+                        this.setState({ deckId: '', title: '', imgUri: '', error: false});
                     });
             }
-
-
+        } else {
+            this.setState({
+                ...this.state,
+                error: true
+            });
         }
+    }
 
+    handleTextChange = (text) => {
+        this.setState({
+            ...this.state,
+            title: text,
+            error: false
+        })
     }
 
     render() {
         return (
             <View style={styles.viewWrapper}>
-                <Text style={styles.addCardHeroText}>A a new deck so you can get your study on.</Text>
+                <Card containerStyle={{padding: 0}}>
+                    <View style={styles.addNewDeckCardBody}>
+                        <Text style={styles.addNewDeckHeroText}>A a new deck so you can get your study on.</Text>
+                        <View style={styles.addNewDeckForm}>
+                            <Input
+                                containerStyle={styles.addDeckInputContainer}
+                                placeholder='Title'
+                                inputStyle={styles.addNeDeckInputStyles}
+                                label={<Text style={styles.addDeckInputLabel}>Deck Title:</Text>}
+                                value={this.state.title}
+                                onChangeText={title => this.handleTextChange(title)}
+                            />
 
-                <Input
-                    containerStyle={styles.addCardInputContainer}
-                    placeholder='Title'
-                    label={<Text style={styles.addCardInputLabel}>Deck Title:</Text>}
-                    value={this.state.title}
-                    onChangeText={title => this.setState({ title })}
-                />
+                            {this.state.error &&
+                            <View style={styles.addDeckErrorMessageContainer}>
+                                <Icon
+                                    name='error-outline'
+                                    size={36}
+                                    style={styles.errorMessageIcon}
+                                    color='#db684d'
+                                    type='material'
+                                />
+                                <Text style={styles.errorMessageText}>Your flashcard deck must have a title</Text>
+                            </View>
+                            }
+                        </View>
+                    </View>
 
-                <TouchableOpacity
-                    onPress={() => {this.submitDeck()}}
-                >
-                    <Text style={styles.submitButtons}>Save Deck</Text>
-                </TouchableOpacity>
+                    <View style={[styles.buttonRow]}>
+                        <TouchableOpacity
+                            onPress={() => {this.submitDeck()}}
+                        >
+                            <View style={styles.addNewDeckSubmitButtons}>
+                                <Icon
+                                    name='content-save'
+                                    size={18}
+                                    type='material-community'
+                                    color='#1597af'
+                                    style={styles.singleDeckBtnAddCardBtnViewIcon}/>
+                                <Text style={styles.addNewDeckSubmitButtonText}>Save Deck</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </Card>
             </View>
         );
     }

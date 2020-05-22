@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity } from "react-native";
-import {Text, Image, Icon, Overlay} from "react-native-elements";
+import {Text, Icon, Overlay, Card, Badge} from "react-native-elements";
 import { StackActions } from '@react-navigation/native';
 import styles from '../utils/styles';
 import {deleteDeck} from "../store/actions/actions-Decks";
@@ -91,50 +91,58 @@ class SingleDeckView extends Component {
 
         return (
             <View>
-                <Image
-                    source={{uri: deck.deckImgUri}}
-                    style={styles.singleDeckImage}
-                />
                 <View style={styles.viewWrapper}>
-                    <View>
-                        <Text>Cards: {deck.questions.length}</Text>
-                    </View>
-                    <View style={styles.singleDeckBtnRow}>
-                        <TouchableOpacity
-                            onPress={() => this.addCard({deck})}
-                        >
-                            <View style={styles.addCardBtnView}>
-                                <Icon
-                                    name='plus-circle'
-                                    size={18}
-                                    type='material-community'
-                                    style={styles.addCardBtnViewIcon}/>
+                    <Card containerStyle={{padding: 0}}>
+                        <View style={styles.singleDeckCardBody}>
+                            <Text style={styles.singleDeckTitle}>{deck.title}</Text>
+                            <Badge badgeStyle={styles.singleDeckCardBadge} value={<Text style={styles.singleDeckCardBadgeText}>{deck.questions.length} cards</Text>} />
+                        </View>
 
-                                <Text style={styles.addCardBtnViewText}>Add A Card</Text>
+                        <View style={[styles.singleDeckBtnRow, styles.buttonRow]}>
+                            <View style={[styles.singleDeckButtonWrap, styles.singleDeckBtnAddCardView]}>
+                                <TouchableOpacity
+                                    onPress={() => this.addCard({deck})}
+                                >
+                                    <View style={styles.singleDeckButtons}>
+                                        <Icon
+                                            name='plus-circle'
+                                            size={18}
+                                            type='material-community'
+                                            color='#1597af'
+                                            style={styles.singleDeckBtnAddCardBtnViewIcon}/>
+
+                                        <Text style={styles.singleDeckBtnAddCardBtnIconText}>Add A Card</Text>
+                                    </View>
+
+                                </TouchableOpacity>
                             </View>
 
-                        </TouchableOpacity>
-
-                        {enableQuiz
-                            ?
-                            <TouchableOpacity
-                                onPress={() => this.startQuiz({deck})}
-                            >
-                                <View style={styles.quizCardBtnView}>
-                                    <Icon
-                                        name='school'
-                                        size={18}
-                                        type='material-community'
-                                        style={styles.addCardBtnViewIcon}/>
-                                    <Text style={styles.addCardBtnViewText}>Start Quiz</Text>
+                            {enableQuiz
+                                ?
+                                <View style={styles.singleDeckButtonWrap}>
+                                    <TouchableOpacity
+                                        onPress={() => this.startQuiz({deck})}
+                                    >
+                                        <View style={styles.singleDeckButtons}>
+                                            <Icon
+                                                name='school'
+                                                size={18}
+                                                type='material-community'
+                                                color='#1597af'
+                                                style={styles.singleDeckBtnAddCardBtnViewIcon}/>
+                                            <Text style={styles.singleDeckBtnAddCardBtnIconText}>Start Quiz</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                            :
-                            <Text>Add a question to take a quiz!</Text>
-                        }
-
-                    </View>
+                                :
+                                <View style={styles.singleDeckButtonWrap}>
+                                    <Text style={styles.singleDeckAddQuestionText}>Add a card to take a quiz!</Text>
+                                </View>
+                            }
+                        </View>
+                    </Card>
                 </View>
+
                 <Overlay
                     isVisible={this.state.visible}
                     onBackdropPress={this.toggleOverlay}

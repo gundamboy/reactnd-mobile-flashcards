@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, Text} from "react-native-elements";
+import {Card, Icon, Text} from "react-native-elements";
 import {TouchableOpacity, View} from "react-native";
 import styles from "../utils/styles";
 import {clearLocalNotification, setLocalNotification} from "../utils/helpers";
@@ -13,14 +13,35 @@ class Quiz extends Component {
             correct: 0,
             incorrect: 0,
             totalQuestions: 0,
-            showQuestion: true,
+            showQuestion: false,
         }
     }
 
     componentDidMount() {
-        const { deck } = this.props.route.params.deck;
-        this.props.navigation.setOptions({title: `${deck.title} Quiz`});
         clearLocalNotification().then(setLocalNotification);
+
+        const { deck } = this.props.route.params.deck;
+        this.props.navigation.setOptions({
+            title: `${deck.title} Quiz`,
+            headerRight: () => (
+                <View style={{flexDirection: 'row'}}>
+                    <TouchableOpacity
+                        style={styles.headerButtons}
+                        onPress={() => this.goToHome()}>
+                        <Icon
+                            name='home'
+                            size={24}
+                            type='material-community'
+                        />
+                    </TouchableOpacity>
+                </View>
+            )
+        });
+
+    }
+
+    goToHome = () => {
+        this.props.navigation.navigate('Home');
     }
 
     updateQuiz = ( id, total ) => {
@@ -61,8 +82,8 @@ class Quiz extends Component {
 
     renderQuestion = (question, total) => {
         return (
-            <Card>
-                <View style={styles.cardHeader}>
+            <Card containerStyle={{padding: 0}}>
+                <View style={[styles.quizQuestionTotalRow, styles.cardPaddingFix]}>
                     <Text style={styles.cardTitle}>Question {this.state.currentQuestion + 1} of {total}</Text>
                 </View>
 
@@ -72,12 +93,18 @@ class Quiz extends Component {
                     </View>
                 </View>
 
-                <View style={[styles.cardFooterQuiz, styles.cardButtonRowQuiz]}>
+                <View style={[styles.quizCardFooter, styles.buttonRow]}>
                     <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizAnswer]}
+                        style={[styles.quizViewAnswerBtn]}
                         onPress={this.btnViewAnswer}
                     >
-                        <Text style={styles.addCardBtnViewText}>View Answer</Text>
+                        <Icon
+                            name='sync'
+                            size={18}
+                            type='material'
+                            color='#1597af'
+                            style={styles.quizViewAnswerIcon}/>
+                        <Text style={styles.quizButtonText}>View Answer</Text>
                     </TouchableOpacity>
                 </View>
             </Card>
@@ -86,8 +113,8 @@ class Quiz extends Component {
 
     renderAnswer = (answer, total) => {
         return (
-            <Card>
-                <View style={styles.cardHeader}>
+            <Card containerStyle={{padding: 0}}>
+                <View style={[styles.quizQuestionTotalRow, styles.cardPaddingFix]}>
                     <Text style={styles.cardTitle}>Answer for question {this.state.currentQuestion + 1}</Text>
                 </View>
 
@@ -97,21 +124,35 @@ class Quiz extends Component {
                     </View>
                 </View>
 
-                <View style={[styles.cardFooterQuiz, styles.cardButtonRowQuizAnswers]}>
-                    <Text>How did you do?</Text>
-                    <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizCorrect]}
-                        onPress={() => this.updateQuiz('correct', total)}
-                    >
-                        <Text style={styles.addCardBtnViewText}>Correct</Text>
-                    </TouchableOpacity>
+                <View style={[styles.quizCardFooter, styles.buttonRow]}>
+                    <Text style={styles.quizFooterText}>How did you do?</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <TouchableOpacity
+                            style={[styles.quizAnswerButton]}
+                            onPress={() => this.updateQuiz('correct', total)}
+                        >
+                            <Icon
+                                name='check'
+                                size={18}
+                                type='material-community'
+                                color='#1597af'
+                                style={styles.quizViewAnswerIcon}/>
+                            <Text style={[styles.quizButtonText, styles.btnQuizCorrect]}>Correct</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizIncorrect]}
-                        onPress={() => this.updateQuiz('incorrect', total)}
-                    >
-                        <Text style={styles.addCardBtnViewText}>Incorrect</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.quizAnswerButton]}
+                            onPress={() => this.updateQuiz('incorrect', total)}
+                        >
+                            <Icon
+                                name='close'
+                                size={18}
+                                type='material'
+                                color='#db684d'
+                                style={styles.quizViewAnswerIcon}/>
+                            <Text style={[styles.quizButtonText, styles.btnQuizIncorrect]}>Incorrect</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Card>
         );
@@ -121,33 +162,33 @@ class Quiz extends Component {
          const { deck } = this.props.route.params.deck;
 
         return (
-            <Card>
-                <View style={styles.cardHeader}>
-                    <Text>Good job, you completed the quiz!</Text>
+            <Card containerStyle={{padding: 0}}>
+                <View style={[styles.quizQuestionTotalRow, styles.cardPaddingFix]}>
+                    <Text style={styles.cardTitle}>Good job, you completed the quiz!</Text>
                 </View>
 
                 <View style={styles.cardBodyQuiz}>
-                    <Text>You scored a {Math.round(((this.state.correct)/deck.questions.length)*100)}%</Text>
+                    <Text style={styles.quizBodyText}>You scored a {Math.round(((this.state.correct)/deck.questions.length)*100)}%</Text>
                 </View>
 
-                <View style={[styles.cardFooterQuiz, styles.cardButtonRowQuizComplete]}>
+                <View style={[styles.quizCompleteCardFooter, styles.buttonRow]}>
                     <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizAnswer]}
+                        style={[styles.quizCompleteButton]}
                         onPress={() => this.resetQuiz()}
                     >
-                        <Text style={styles.addCardBtnViewText}>Restart Quiz</Text>
+                        <Text style={styles.quizButtonText}>Restart Quiz</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizAnswer]}
+                        style={[styles.quizCompleteButton, styles.quizCompleteHomeButton]}
                         onPress={() => this.goHome()}
                     >
-                        <Text style={styles.addCardBtnViewText}>Home</Text>
+                        <Text style={[styles.quizButtonText]}>Home</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={[styles.btnQuiz, styles.btnQuizAnswer]}
+                        style={[styles.quizCompleteButton]}
                         onPress={() => this.backToDeck()}
                     >
-                        <Text style={styles.addCardBtnViewText}>Back to deck</Text>
+                        <Text style={styles.quizButtonText}>Back to deck</Text>
                     </TouchableOpacity>
                 </View>
             </Card>
