@@ -47,12 +47,6 @@ class DeckList extends Component {
         });
     }
 
-    toggleOverlay = () => {
-        this.setState({
-            visible: !this.state.visible
-        })
-    };
-
     render() {
         const { decks } = this.props.decks;
 
