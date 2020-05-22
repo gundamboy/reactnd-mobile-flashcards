@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {TouchableOpacity, View} from "react-native";
 import {Card, Icon, Input, Text} from "react-native-elements";
-import {handleGetAllDecks, saveDeck} from "../store/actions/actions-Decks";
+import {saveDeck} from "../store/actions/actions-Decks";
 import styles from "../utils/styles";
 import {generateDeckUID, generateImageUrl} from "../utils/helpers";
 import {getDeck} from "../utils/api";
@@ -15,7 +15,7 @@ class AddDeck extends Component {
             title: '',
             deckId: '',
             imgUri: '',
-            error: true
+            error: false
         }
     }
 

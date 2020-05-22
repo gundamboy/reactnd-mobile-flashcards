@@ -1,14 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-
-const footerTextColor = '#585858';
-const buttonTextColor = '#1597af';
-const badgeColor = '#1597af';
-const buttonBorderColor = '#d2d2d2';
-const white = '#fff';
-const correct = '#4bbb8d';
-const incorrect = '#db684d';
-const error = '#db684d';
+import {footerTextColor, buttonTextColor, badgeColor, buttonBorderColor, white, error} from './colors';
 
 export default StyleSheet.create({
     errorMessageContainer: {
@@ -29,6 +21,34 @@ export default StyleSheet.create({
         paddingLeft: 8,
         paddingRight: 8,
         flex: 2
+    },
+    overlayHeader: {
+        fontSize: 22,
+        textAlign: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+        marginBottom: 8,
+        paddingBottom: 4
+    },
+    overlayBody: {
+        padding: 8,
+    },
+    overlayText: {
+        paddingTop: 16,
+        paddingBottom: 16
+    },
+    overlayButtons: {
+        alignItems: 'center',
+        width: 100,
+        padding: 8,
+    },
+    overlayCancelButton: {
+        borderLeftWidth: 1,
+        borderLeftColor: buttonBorderColor,
+        flex: 1
+    },
+    overlayDeleteButton: {
+        flex: 1
     },
     viewWrapper: {
         marginLeft: 8,
@@ -107,6 +127,7 @@ export default StyleSheet.create({
         marginTop: 16,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
     },
     singleDeckButtonWrap: {
         flex: 1,
@@ -272,11 +293,15 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    quizViewQuestionCardFooter: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    },
     quizViewAnswerIcon: {
         marginRight: 4
     },
     quizAnswerButton: {
-        flexDirection: 'row',
         padding: 8,
         paddingLeft: 20,
         paddingRight: 20,

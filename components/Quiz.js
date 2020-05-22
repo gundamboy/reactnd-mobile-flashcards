@@ -93,9 +93,9 @@ class Quiz extends Component {
                     </View>
                 </View>
 
-                <View style={[styles.quizCardFooter, styles.buttonRow]}>
+                <View style={[styles.quizViewQuestionCardFooter, styles.buttonRow]}>
                     <TouchableOpacity
-                        style={[styles.quizViewAnswerBtn]}
+                        style={[styles.quizAnswerButton]}
                         onPress={this.btnViewAnswer}
                     >
                         <Icon

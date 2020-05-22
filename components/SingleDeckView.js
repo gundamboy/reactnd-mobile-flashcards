@@ -146,33 +146,29 @@ class SingleDeckView extends Component {
                 <Overlay
                     isVisible={this.state.visible}
                     onBackdropPress={this.toggleOverlay}
-                    overlayStyle={{}}
+                    overlayStyle={{padding: 0}}
                 >
-                    <View>
+                    <View style={styles.overlayBody}>
                         <Text
-                            style={{
-                                fontSize: 22,
-                                textAlign: 'center',
-                                borderBottomWidth: 1,
-                                borderBottomColor: '#ccc',
-                                marginBottom: 8,
-                                paddingBottom: 4
-                            }}
+                            style={styles.overlayHeader}
                         >Options</Text>
-                        <Text>Would you like to delete this deck?</Text>
-                        <View style={styles.deleteDeckBtnRow}>
-                            <TouchableOpacity
-                                onPress={() => {this.deleteDeck(this.props.deck.id)}}
-                            >
-                                <Text style={styles.submitButtons}>DELETE</Text>
-                            </TouchableOpacity>
+                        <Text style={styles.overlayText}>Would you like to delete this deck?</Text>
+                    </View>
 
-                            <TouchableOpacity
-                                onPress={() => {this.toggleOverlay()}}
-                            >
-                                <Text style={styles.submitButtons}>Cancel</Text>
-                            </TouchableOpacity>
-                        </View>
+                    <View style={[styles.deleteDeckBtnRow, styles.buttonRow]}>
+                        <TouchableOpacity
+                            onPress={() => {this.deleteDeck(this.props.deck.id)}}
+                            style={[styles.overlayButtons, styles.overlayDeleteButton]}
+                        >
+                            <Text>DELETE</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => {this.toggleOverlay()}}
+                            style={[styles.overlayButtons, styles.overlayCancelButton]}
+                        >
+                            <Text>Cancel</Text>
+                        </TouchableOpacity>
                     </View>
                 </Overlay>
             </View>

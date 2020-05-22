@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { Text, View, FlatList, TouchableOpacity, Easing } from "react-native";
-import {Card, Icon, Overlay} from "react-native-elements";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
+import {Card, Icon} from "react-native-elements";
 import {handleGetAllDecks} from "../store/actions/actions-Decks";
 import styles from '../utils/styles';
 
@@ -26,15 +26,6 @@ class DeckList extends Component {
                         onPress={() => this.goToAddDeck()}>
                         <Icon
                             name='plus-circle'
-                            size={24}
-                            type='material-community'
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.headerButtons}
-                        onPress={() => this.toggleOverlay()}>
-                        <Icon
-                            name='settings'
                             size={24}
                             type='material-community'
                         />
@@ -91,29 +82,6 @@ class DeckList extends Component {
                     keyExtractor={item => decks[item].id}
                     horizontal={false}
                 />
-
-                <Overlay
-                    isVisible={this.state.visible}
-                    onBackdropPress={this.toggleOverlay}
-                    overlayStyle={{}}
-                >
-                    <View>
-                        <Text
-                            style={{
-                                fontSize: 22,
-                                textAlign: 'center',
-                                borderBottomWidth: 1,
-                                borderBottomColor: '#ccc',
-                                marginBottom: 8,
-                                paddingBottom: 4
-                            }}
-                        >Study Notification Options</Text>
-                        <Text>Choose a time to get a study reminder</Text>
-                        <View style={styles.deleteDeckBtnRow}>
-
-                        </View>
-                    </View>
-                </Overlay>
             </View>
         );
     }
