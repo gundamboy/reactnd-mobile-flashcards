@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
-import { Text, View, FlatList, TouchableOpacity } from "react-native";
-import {Card, Icon, Button, Overlay} from "react-native-elements";
+import { Text, View, FlatList, TouchableOpacity, Easing } from "react-native";
+import {Card, Icon, Overlay} from "react-native-elements";
 import {handleGetAllDecks} from "../store/actions/actions-Decks";
 import styles from '../utils/styles';
 
@@ -70,21 +70,23 @@ class DeckList extends Component {
                 <FlatList
                     data={Object.keys(decks)}
                     renderItem={({ item }) => (
-                        <Card>
-                            <TouchableOpacity
-                                onPress={() => this.goToSingleDeck(decks[item])}
-                            >
-                                <View style={styles.cardFooter}>
-                                    <View>
-                                        <Text>{decks[item].title}</Text>
+                        <View>
+                            <Card>
+                                <TouchableOpacity
+                                    onPress={() => this.goToSingleDeck(decks[item])}
+                                >
+                                    <View style={styles.cardFooter}>
+                                        <View>
+                                            <Text>{decks[item].title}</Text>
+                                        </View>
+                                        <View style={styles.deckListCardCountRow}>
+                                            <Text>{decks[item].questions.length}</Text>
+                                            <Text>{decks[item].questions.length === 1 ? "card" : "cards"}</Text>
+                                        </View>
                                     </View>
-                                    <View style={styles.deckListCardCountRow}>
-                                        <Text>{decks[item].questions.length}</Text>
-                                        <Text>{decks[item].questions.length === 1 ? "card" : "cards"}</Text>
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </Card>
+                                </TouchableOpacity>
+                            </Card>
+                        </View>
                     )}
                     keyExtractor={item => decks[item].id}
                     horizontal={false}

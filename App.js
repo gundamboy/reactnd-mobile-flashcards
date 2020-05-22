@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {connect, Provider} from "react-redux";
+import {Provider} from "react-redux";
 import store from "./store";
 import {NavigationContainer} from "@react-navigation/native";
 import DeckList from "./components/DeckList";
@@ -8,7 +8,6 @@ import {createStackNavigator} from "@react-navigation/stack";
 import SingleDeckView from "./components/SingleDeckView";
 import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
-import { Button, Icon } from 'react-native-elements';
 import AddDeck from "./components/AddDeck";
 
 const Stack = createStackNavigator();
