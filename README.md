@@ -1,12 +1,12 @@
 Mobile Flashcards: A React Native Study App
 ===
 
-##Description
+## Description
 Project 3 from the Udacity React Nanodegree.
 
 > "This project encompasses the fundamental aspects of building a native application including handling infinite lists, routing, and user input."
 
-##Installation / Running the app
+## Installation / Running the app
 A few things to note here. This app uses [Expo](https://expo.io/learn) for a local testing environment so I recommend you also install it. You can follow the installation instruction from the Expo link.
 
 To install, clone the project or download the zip file and then navigate into the project folder and run
