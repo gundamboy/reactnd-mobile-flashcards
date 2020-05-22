@@ -1,36 +1,49 @@
-import * as React from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import {Provider} from "react-redux";
+import store from "./store";
+import {NavigationContainer} from "@react-navigation/native";
+import DeckList from "./components/DeckList";
+import {ThemeProvider} from "react-native-elements";
+import {createStackNavigator} from "@react-navigation/stack";
+import SingleDeckView from "./components/SingleDeckView";
+import AddCard from "./components/AddCard";
+import Quiz from "./components/Quiz";
+import AddDeck from "./components/AddDeck";
+import {setLocalNotification} from "./utils/helpers";
 
-const instructions = Platform.select({
-  ios: `Press Cmd+R to reload,\nCmd+D or shake for dev menu`,
-  android: `Double tap R on your keyboard to reload,\nShake or press menu button for dev menu`,
-});
+const Stack = createStackNavigator();
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.welcome}>Welcome to React Native!</Text>
-      <Text style={styles.instructions}>To get started, edit App.js</Text>
-      <Text style={styles.instructions}>{instructions}</Text>
-    </View>
-  );
+class App extends Component {
+
+    componentDidMount() {
+        setLocalNotification();
+    }
+
+    render() {
+        return (
+            <Provider store={store}>
+                <ThemeProvider>
+                    <NavigationContainer>
+                        <Stack.Navigator initialRouteName="Home">
+                            <Stack.Screen name="Home"
+                                          options={({ navigation, route}) => ({
+                                              headerTitle: "Your Decks"
+                                          })}
+                                          component={DeckList} />
+                            <Stack.Screen name="AddDeck"
+                                          options={({ navigation, route}) => ({
+                                              headerTitle: "Add A New Deck"
+                                          })}
+                                          component={AddDeck} />
+                            <Stack.Screen name="Deck" component={SingleDeckView} />
+                            <Stack.Screen name="AddCard" component={AddCard} options={{title: "Add A Card"}} />
+                            <Stack.Screen name="Quiz" component={Quiz} />
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </ThemeProvider>
+            </Provider>
+        );
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+export default App;
