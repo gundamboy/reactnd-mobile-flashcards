@@ -9,10 +9,15 @@ import SingleDeckView from "./components/SingleDeckView";
 import AddCard from "./components/AddCard";
 import Quiz from "./components/Quiz";
 import AddDeck from "./components/AddDeck";
+import {setLocalNotification} from "./utils/helpers";
 
 const Stack = createStackNavigator();
 
 class App extends Component {
+
+    componentDidMount() {
+        setLocalNotification();
+    }
 
     render() {
         return (

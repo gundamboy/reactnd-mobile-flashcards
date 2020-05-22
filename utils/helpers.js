@@ -5,26 +5,6 @@ import * as Permissions from 'expo-permissions';
 import {NOTIFICATION_KEY} from "./constants";
 
 
-export function isBetween (num, x, y) {
-    if (num >= x && num <= y) {
-        return true;
-    }
-
-    return false;
-}
-
-export function timeToString (time = Date.now()) {
-    const date = new Date(time);
-    const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    return todayUTC.toISOString().split('T')[0];
-}
-
-export function getDailyReminderValue () {
-    return {
-        today: "Don't forget to study today!"
-    }
-}
-
 export function clearLocalNotification () {
     return AsyncStorage.removeItem(NOTIFICATION_KEY, () => {})
         .then(Notifications.cancelAllScheduledNotificationsAsync);
@@ -47,12 +27,16 @@ export function createNotification () {
 }
 
 export function setLocalNotification () {
+    console.group("Set Notifications");
     AsyncStorage.getItem(NOTIFICATION_KEY)
         .then(JSON.parse)
         .then((data) => {
+            console.log("data: ", data);
             if(data === null) {
+                console.log("data === null, need to ask permissions");
                 Permissions.askAsync(Permissions.NOTIFICATIONS)
                     .then(({ status }) => {
+                        console.log("permission status: ", status);
                         if (status === 'granted') {
                             Notifications.cancelAllScheduledNotificationsAsync().then();
 
@@ -60,6 +44,8 @@ export function setLocalNotification () {
                             tomorrow.setDate(tomorrow.getDate() + 1);
                             tomorrow.setHours(20);
                             tomorrow.setMinutes(0);
+
+                            console.log("tomorrows time is: ", tomorrow);
 
                             Notifications.scheduleLocalNotificationAsync(
                                 createNotification(),
@@ -73,8 +59,12 @@ export function setLocalNotification () {
 
                         }
                     })
+                    .catch((error) => {
+                        console.log("permissions error: ", error);
+                    })
             }
         });
+    console.groupEnd();
 }
 
 export function generateDeckUID() {
@@ -84,8 +74,4 @@ export function generateDeckUID() {
 export function generateImageUrl() {
     const cats = ["animals", "arc", "nature", "tech"];
     return "http://placeimg.com/1000/260/" + cats[Math.floor(Math.random() * cats.length)];
-}
-
-export function setReadWritePermissions () {
-
 }
